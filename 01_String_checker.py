@@ -16,6 +16,8 @@ def string_checker(question, valid_list, error):
         print()
 
 
+# Main routine...
+
 # List of valid response
 yes_no_list = ["yes", "no"]
 rtc_list = ["rectangle", "triangle", "circle", "xxx"]

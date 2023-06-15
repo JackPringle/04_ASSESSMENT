@@ -12,12 +12,10 @@ def int_generator():
 
 # Loop question when <enter> is pressed (for testing purposes)
 while True:
-    repeat = input("")
+    repeat = input("Generate a number between 1 and 150 (inclusive): ")
     response = repeat
     if repeat == "":
         random_int = int_generator()
-        question = f"The length is {random_int}"
-        print(question)
-        print()
+        print(random_int)
     else:
         break

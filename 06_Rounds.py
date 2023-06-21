@@ -1,4 +1,6 @@
 # Functions...
+
+# Number checker function
 def num_check(question, num_type, low=None, exit_code=None):
     error = "Please enter a number!"
 
@@ -32,22 +34,26 @@ def num_check(question, num_type, low=None, exit_code=None):
 
 # Main routine...
 
+# Ask the questions question, set mode to nothing
 rounds_played = 0
 rounds = num_check("How many questions?: ", int, 0, exit_code="")
-
 mode = None
 
+# If user enters <enter> start infinite mode
 if rounds == "":
     mode = "infinite"
     rounds = 5
 
 # Rounds loop
-end_game = "no"
-while end_game == "no":
+end_quiz = "no"
+while end_quiz == "no":
 
+    # Calculate rounds played for infinite mode
     if mode == "infinite":
         heading = f"Question {rounds_played + 1} (infinite mode)"
         rounds += 1
+
+    # If mode is not infinite, calculate rounds played against total rounds
     else:
         heading = f"Question {rounds_played + 1} of {rounds}"
 
@@ -55,24 +61,28 @@ while end_game == "no":
 
     rounds_played += 1
 
+    # Show question and ask user for answer
     print("**Question goes here**")
     print()
     guess = num_check("What is the area? (or 'xxx' to exit): ", float, 0, "xxx")
     print("you guessed", guess)
     print()
 
+    # Check for exit code
     if guess == "xxx":
-        end_game = "yes"
+        end_quiz = "yes"
 
-    if end_game == "yes":
-        print("You have ended the game")
+    # If exit code is entered, end
+    if end_quiz == "yes":
+        print("You have ended the quiz")
         break
 
     # Pretend we've checked users answer
     print("**Check answer**")
     print()
 
-    # check if we are out of rounds
+    # Check if we are out of rounds
+    # If out of rounds, end rounds loop
     if rounds_played >= rounds:
         print("Out of rounds!")
         break

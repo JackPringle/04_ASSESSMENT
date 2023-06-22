@@ -32,8 +32,14 @@ def string_checker(question, valid_list, error):
 # List of valid responses
 rtc_list = ["rectangle", "triangle", "circle", "xxx"]
 
+question_type = ""
 
-question_type = string_checker("What shape would you like to solve areas AND perimeters for?: ", rtc_list, "Please "
-                                                                                                           "enter 'r'"
-                                                                                                           " or 't' "
-                                                                                                           "or 'c'")
+while question_type != "xxx":
+    question_type = string_checker("R / T / C? ",
+                                   rtc_list, "Please enter r / t / c")
+    if question_type == "rectangle":
+        print("Start rectangle mode")
+    elif question_type == "triangle":
+        print("Start triangle mode")
+    elif question_type == "circle":
+        print("Start circle mode")

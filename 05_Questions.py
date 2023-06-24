@@ -39,7 +39,58 @@ while question_type != "xxx":
                                    rtc_list, "Please enter r / t / c")
     if question_type == "rectangle":
         print("Start rectangle mode")
+
+        L_value = int_generator()
+        W_value = int_generator()
+        
+        print()
+        print("Rectangle area = L X W")
+        print("Rectangle perimeter = L + L + W + W")
+        print()
+        print("    ---------------")
+        print("    |             |")
+        print("  W |             |")
+        print("    |             |")
+        print("    ---------------")
+        print("           L")
+        print()
+
+        Q1_start = ""
+
+        start_question = ""
+        
+        Q1_start_list = ["", "xxx"]
+
+        while Q1_start != "xxx" :
+            Q1_start = string_checker("Press <enter> for Question 1 (or xxx to quit): ", Q1_start_list, None)
+
+            if Q1_start == "":
+                print("START QUESTION ONE")
+
+            elif Q1_start == "xxx":
+                print("End game")
+                break
+            
+        print("**********")
+        print("Question 1")
+        print("**********")
+        print()
+        print("                ---------------")
+        print("                |             |")
+        print(f" W = {W_value} |             |")
+        print("                |             |")
+        print("                ---------------")
+        print(f"                  L = {L_value}")
+        print()
+        print("The area is ___ metres squared")
+        input("Area: ")
+        
     elif question_type == "triangle":
         print("Start triangle mode")
+        
     elif question_type == "circle":
         print("Start circle mode")
+        
+    elif question_type == "xxx":
+        print("You have quit")
+        break

@@ -7,6 +7,9 @@ def string_checker(question, valid_list, error):
 
         # Check the string is in the valid list
         for item in valid_list:
+
+            # Check if the response matches the entire item or just the first character
+            # of the item (if it's not empty)
             if response == item or (len(item) > 0 and response == item[0]):
                 print("program continues")
                 return item

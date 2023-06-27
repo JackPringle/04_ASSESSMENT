@@ -5,7 +5,7 @@ import random
 def question_gen(question_type):
     while True:
 
-        # Chose random orientations for rectnagles and isosceles
+        # Chose random orientations for rectangles and isosceles
         rec_orientation = random.choice(["vertical", "horizontal"])
         isos_orientation = random.choice(["vertical", "horizontal"])
 
@@ -27,15 +27,15 @@ def question_gen(question_type):
             values_dict["L_value"] = L_value
             values_dict["W_value"] = W_value
 
-            # if L is greater than W, generate from two different orientations of rectnagles
+            # if L is greater than W, generate from two different orientations of rectangles
             if L_value > W_value:
                 if rec_orientation == "vertical":
-                    
+
                     print()
                     print("    ----------")
                     print("    |        |")
                     print("    |        |")
-                    print(f"    |        | L = {L_value}") 
+                    print(f"    |        | L = {L_value}")
                     print("    |        |")
                     print("    |        |")
                     print("    |        |")
@@ -43,7 +43,7 @@ def question_gen(question_type):
                     print(f"     W = {W_value}")
                     print()
                     break
-                    
+
                 elif rec_orientation == "horizontal":
                     print("    ---------------")
                     print("    |             |")
@@ -67,7 +67,6 @@ def question_gen(question_type):
                 print()
                 break
 
-
         # TRIANGLE QUESTIONS
         if question_type == "triangle":
 
@@ -89,93 +88,91 @@ def question_gen(question_type):
 
             # print narrow isosceles triangle    
             if a_value == c_value and a_value > b_value:
-                    print()
-                    print("              /\               ^")
-                    print("             /  \              |")
-                    print("            /    \             |")
-                    print("   a = {}           c = {}      h = {}".format(a_value, c_value, h_value))
-                    print("          /        \           |")
-                    print("         /          \          |")
-                    print("        /            \         | ")
-                    print("       /______________\        v")
-                    print("            b = {}".format(b_value))
-                    print()
-                    break
-                
+                print()
+                print("              /\               ^")
+                print("             /  \              |")
+                print("            /    \             |")
+                print("   a = {}           c = {}      h = {}".format(a_value, c_value, h_value))
+                print("          /        \           |")
+                print("         /          \          |")
+                print("        /            \         | ")
+                print("       /______________\        v")
+                print("            b = {}".format(b_value))
+                print()
+                break
+
             # print flat isosceles triangle
             elif a_value == c_value and a_value < b_value:
-                    print()
-                    print("                _/\_                ^")
-                    print("              _/    \_              |")
-                    print("            _/        \_            |")
-                    print("    a = {}                c = {}     h = {}".format(a_value, c_value, h_value))
-                    print("        _/                \_        |")
-                    print("      _/                    \_      |")
-                    print("     /________________________\     v")
-                    print("            b = {}".format(b_value))
-                    print()
-                    break
-                
+                print()
+                print("                _/\_                ^")
+                print("              _/    \_              |")
+                print("            _/        \_            |")
+                print("    a = {}                c = {}     h = {}".format(a_value, c_value, h_value))
+                print("        _/                \_        |")
+                print("      _/                    \_      |")
+                print("     /________________________\     v")
+                print("            b = {}".format(b_value))
+                print()
+                break
+
             # if all sides are equal, print equilateral triangle
             elif a_value == b_value == c_value:
-                    print()
-                    print("                              ^")
-                    print("              /\              |")
-                    print("             /  \             |")
-                    print("    a = {}          c = {}     h = {}".format(a_value, c_value, h_value))
-                    print("           /      \           |")
-                    print("         /          \         |")
-                    print("        /            \        | ")
-                    print("       /______________\       v")
-                    print("            b = {}".format(b_value))
-                    print()
-                    break
-                
+                print()
+                print("                              ^")
+                print("              /\              |")
+                print("             /  \             |")
+                print("    a = {}          c = {}     h = {}".format(a_value, c_value, h_value))
+                print("           /      \           |")
+                print("         /          \         |")
+                print("        /            \        | ")
+                print("       /______________\       v")
+                print("            b = {}".format(b_value))
+                print()
+                break
+
             # if all sides are different lengths, print from TWO variations of isosceles triangles
             elif a_value != b_value != c_value:
 
-                    # Variation 1
-                    if isos_orientation == "vertical":
-                        print()
-                        print("     (side lengths are not proportional)")
-                        print()
-                        print()
-                        print("        |\                ^")
-                        print("        | \               |")
-                        print("        |  \              |")
-                        print("  a = {}       c = {}      h = {}".format(a_value, c_value, h_value))
-                        print("        |    \            |")
-                        print("        |     \           |")
-                        print("        |      \          |")
-                        print("        |       \         |")
-                        print("        |________\        v")
-                        print("          b = {}".format(b_value))
-                        print()
-                        break
+                # Variation 1
+                if isos_orientation == "vertical":
+                    print()
+                    print("     (side lengths are not proportional)")
+                    print()
+                    print()
+                    print("          \_                     ^")
+                    print("           \ \_                  |")
+                    print("            \  \                 |")
+                    print("      a = {}       c = {}         h = {}".format(a_value, c_value, h_value))
+                    print("              \    \_            |")
+                    print("               \     \_          |")
+                    print("                \      \_        |")
+                    print("                 \       \_      |")
+                    print("                  \________\     v")
+                    print("                    b = {}".format(b_value))
+                    print()
+                    break
 
-                    # Variation 2
-                    if isos_orientation == "horizontal":
-                        print()
-                        print("     (side lengths are not proportional)")
-                        print()
-                        print()
-                        print("            |\                               ^")
-                        print("            |  \ _                           |")
-                        print("            |     \                          |")
-                        print("     a = {}           c = {}                  h = {}".format(a_value, c_value, h_value))
-                        print("            |            \ _                 |")
-                        print("            |                \ _             |")
-                        print("            |_____________________\          v")
-                        print("                  b = {}".format(b_value))
-                        print()
-                        break
+                # Variation 2
+                if isos_orientation == "horizontal":
+                    print()
+                    print("     (side lengths are not proportional)")
+                    print()
+                    print()
+                    print("                /\ _                     ^")
+                    print("               /     \ _                 |")
+                    print("       a = {}              c = {}         h = {}".format(a_value, c_value, h_value))
+                    print("             /               \ _         |")
+                    print("            /____________________\       v")
+                    print("                  b = {}".format(b_value))
+                    print()
+                    break
 
         # CIRCLE QUESTIONS
         if question_type == "circle":
 
             # Generate values
             r_value = random.randint(1, 150)
-            
+
             # Calculate answers
             AREA_ANSWER = 3.14159265358979323846264338327950 * (r_value ** 2)
             PERIMETER_ANSWER = 2 * 3.14159265358979323846264338327950 * r_value
@@ -185,8 +182,7 @@ def question_gen(question_type):
             formatted_perimeter = "{:.2f}".format(PERIMETER_ANSWER)
             AREA_ANSWER = formatted_area
             PERIMETER_ANSWER = formatted_perimeter
-            
-            
+
             # Update values in the dictionary
             values_dict["r_value"] = r_value
 
@@ -224,8 +220,8 @@ def question_gen(question_type):
     values_dict["AREA_ANSWER"] = AREA_ANSWER
     values_dict["PERIMETER_ANSWER"] = PERIMETER_ANSWER
     return values_dict
-                                   
-                    
+
+
 # Main Routine...
 
 # Call questions function for testing purposes
@@ -248,4 +244,3 @@ while True:
     print("The area is", question["AREA_ANSWER"])
     print("The perimeter is", question["PERIMETER_ANSWER"])
     print()
-    

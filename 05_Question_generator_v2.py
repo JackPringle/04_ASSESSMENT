@@ -1,4 +1,5 @@
 import random
+import math
 
 
 # Question generator function...
@@ -174,8 +175,8 @@ def question_gen(question_type):
             r_value = random.randint(1, 150)
 
             # Calculate answers
-            AREA_ANSWER = 3.14159265358979323846264338327950 * (r_value ** 2)
-            PERIMETER_ANSWER = 2 * 3.14159265358979323846264338327950 * r_value
+            AREA_ANSWER = math.pi * (r_value ** 2)
+            PERIMETER_ANSWER = 2 * math.pi * r_value
 
             # Format the answers to two decimal places
             formatted_area = "{:.2f}".format(AREA_ANSWER)

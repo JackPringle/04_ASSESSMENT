@@ -346,111 +346,157 @@ def num_check(question, num_type, low=None, exit_code=None):
 
 # Main Routine...
 
-# List of valid responses for shape type question and next question question
+# List of valid responses for quiz mode question and next question part question
 rtc_list = ["rectangle", "triangle", "circle", "xxx"]
 question_start_list = ["", "xxx"]
 
+# Define variables
 quiz_mode = ""
-question_part = ""
-quiz_type = ""
-start_part = "no"
+question_part_one = ""
+start_part_two = ""
+area_question = "The area is ___ metres squared"
+perimeter_question = "The perimeter is ___ metres"
 
+# Start one question loop
 while True:
-    quiz_mode = string_checker("R / T / C? ",
+
+    # Ask user what shape they would like to solve areas and perimeters for
+    print("What shape?")
+    quiz_mode = string_checker("Rectangle // Triangle // Circle? ",
                                rtc_list, "Please enter r / t / c")
-    if quiz_mode == "rectangle":
-        quiz_type = "rectangle"
-        print("Start rectangle mode")
 
-    elif quiz_mode == "triangle":
-        quiz_type = "triangle"
-        print("Start triangle mode")
-
-    elif quiz_mode == "circle":
-        quiz_type = "circle"
-        print("Start circle mode")
-
-    elif quiz_mode == "xxx":
-        print("You have quit")
+    # If user wants to quit, end question loop
+    if quiz_mode == "xxx":
+        print("You have ended the quiz")
         break
 
-    # RECTANGLE QUESTIONS...
+    # If user chooses rectangles, call formulas function to print rectnagle formulas
     if quiz_mode == "rectangle":
-
-        area_question = "The area is ___ metres squared"
-        perimeter_question = "The perimeter is ___ metres"
-
         formulas("rectangle")
 
-        # Ask if they want the next question
-        question_start = string_checker("Press <enter> for Question _ (or xxx to quit): ",
-                                        question_start_list, None)
+    # If user chooses triangles, call formulas function to print triangle formulas
+    elif quiz_mode == "triangle":
+        formulas("triangle")
 
-        if question_start == "":
-            start_part = "yes"
+    # If user chooses circles, call formulas function to print circle formulas
+    elif quiz_mode == "circle":
+        formulas("circle")
 
-        elif question_start == "xxx":
-            print("You chose to end the quiz")
-            break
+    # Ask if they want part one (area), or to quit
+    question_part_one = string_checker("Press <enter> for Question _ (or xxx to quit): ",
+                                    question_start_list, None)
+    print("-" * 70)
 
-        if start_part == "yes":
-            print()
-            print("*" * 70)
-            print("Question _ of _")
-            print("*" * 70)
-            print()
-            print()
+    # If user wants to quit, end question loop
+    if question_part_one == "xxx":
+        print("You have ended the quiz")
+        break
 
+    # If they want the first question, format question heading
+    elif question_part_one == "":
+        print()
+        print("*" * 35)
+        print("*" * 35)
+        print()
+        print("          QUESTION _ OF _")
+        print()
+        print("*" * 35)
+        print("*" * 35)
+        print()
+        print()
+
+        # If they chose rectangles, generate and print a rectangle question 
+        if quiz_mode == "rectangle":
             question = question_gen("rectangle")
-            print()
-            print("-" * 70)
-            print()
-            print("---PART A---")
-            print()
-            print(area_question)
-            guess_answer = num_check("Area: ", float, 0, "xxx")
-            print()
 
-            if guess_answer == "xxx":
-                print("You chose to end the quiz")
-                break
+        # If they chose triangles, generate and print a triangles question
+        elif quiz_mode == "triangle":
+            question = question_gen("triangle")
 
-            if guess_answer == question["AREA_ANSWER"]:
-                question_part = "area"
+        # If they chose circles, generate and print a circles question
+        elif quiz_mode == "circle":
+            question = question_gen("circle")
 
-                print("^^^^ Correct ^^^^")
-                print("The area was", question["AREA_ANSWER"])
-                print()
+        # Print Part A heading
+        print()
+        print("-" * 70)
+        print()
+        print(" ---PART A---")
+        print()
+        print()
 
-            elif guess_answer != question["AREA_ANSWER"]:
+        # Print the area question
+        print(area_question)
+        
+        # Get user to enter their answer, check answer is valid
+        guess_answer = num_check("Area: ", float, 0, "xxx")
+        print()
 
-                question_part = "area"
-
-                print("XXXXX Incorrect XXXX")
-                print(f"The area was", question["AREA_ANSWER"])
-                print()
-                print("-" * 70)
-
-        question_start = string_checker("Press <enter> for Part Two (or xxx to quit): ",
-                                        question_start_list, None)
-
-        if question_start == "":
-            start_part = "yes"
-
-        elif question_start == "xxx":
-            print("You chose to end the quiz")
+        # If the user wants to quit, end question loop
+        if guess_answer == "xxx":
+            print("You have ended the quiz")
             break
 
-        if start_part == "yes":
-            print("-" * 70)
-            print()
-            print("---PART B---")
-            print()
-            print("Using the same shape as above...")
-            print(perimeter_question)
-            guess_answer = num_check("Perimeter: ", int, 0, "xxx")
+        # If the users answer is correct, tell them, then print the answer
+        elif guess_answer == question["AREA_ANSWER"]:
+            print("^^^^ Correct ^^^^")
+            print("The area was", question["AREA_ANSWER"])
             print()
 
+        # If the users answer is incorrect, tell them, then print the answer
+        elif guess_answer != question["AREA_ANSWER"]:
+            print("XXXXX Incorrect XXXX")
+            print(f"The area was", question["AREA_ANSWER"])
+            print()
+            print("-" * 70)
+            
+    # Ask if they want part 2 (perimeter), or to quit
+    question_part_two = string_checker("Press <enter> for Part Two (or xxx to quit): ",
+                                        question_start_list, None)
+
+    # If the user wants to quit, end question loop
+    if question_part_two == "xxx":
+        print("You have ended the quiz")
+        break
+
+    # If they want part 2, format part 2 heading
+    elif question_part_two == "":
+        print()
+        print("-" * 70)
+        print()
+        print(" ---PART B---")
+        print()
+        print()
+        print("Using the same shape from above...")
+        print()
+
+        # Print the perimeter question
+        print(perimeter_question)
+
+        # Get the user to enter their answer, check answer is valid
+        guess_answer = num_check("Perimeter: ", int, 0, "xxx")
+        print()
+
+        # If the user wants to quit, end question loop
+        if guess_answer == "xxx":
+            print("you have ended the quiz")
+            break
+        # If the answer is correct, tell them, then print the answer
+        elif guess_answer == question["PERIMETER_ANSWER"]:
+            print("^^^^ Correct ^^^^")
+            print("The perimeter was", question["PERIMETER_ANSWER"])
+            print()
+
+        # If the answer is incorrect, tell them, then print the answer
+        elif guess_answer != question["PERIMETER_ANSWER"]:
+            print("XXXXX Incorrect XXXX")
+            print(f"The perimeter was", question["PERIMETER_ANSWER"])
+            print()
+            print("-" * 70)
+
+            print("END OF CODE")
+
+    
 
 
 

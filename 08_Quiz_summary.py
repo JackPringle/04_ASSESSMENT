@@ -1,11 +1,11 @@
 # Main Routine...
 
-# NOTE: this component needs the other components to be able to summarize other scenarios and work for unexpected cases!!
+# NOTE: this component needs the other components to be able to summarize other scenarios and work for unexpected
+# cases!!
 
 # TEST CASE SCENARIO...
 
 # Set values for test case
-question_type = ""
 answer = "<correct answer>"
 correct_answers = 0
 incorrect_answers = 0
@@ -17,7 +17,7 @@ question_type = input("What shape?")
 # Ask how many rounds
 rounds_question = input("How many rounds?")
 
-# Set rounds to an integer so it can be nultiplied and divided later on
+# Set rounds to an integer, so it can be multiplied and divided later on
 rounds = int(rounds_question)
 print("(continues)")
 print()
@@ -106,27 +106,14 @@ print("-" * 35)
 print()
 print(f"Success Rate: {success_rate}%")
 
-# If the their success rate is greater than or equal to 50, congradulate them!
+# If the success rate is greater than or equal to 50, congratulate them!
 if success_rate >= 50:
     print("Well done!")
 
-# If its less than 50%, give them constructive critisism :)
-elif success_rate < 50:
+# If it's less than 50%, but grater than 0, give them constructive criticism :)
+elif 50 > success_rate > 0:
     print("Theres room for improvement!")
-    
 
-        
-    
-
-
-
-
-
-
-
-
-    
-
-
-
-
+# If its zero, yikes!
+elif success_rate == 0:
+    print("Yikes!")

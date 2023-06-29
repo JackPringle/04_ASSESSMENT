@@ -1,5 +1,4 @@
 # Number checker function...
-
 def num_check(question, num_type, low=None, exit_code=None):
     error = "Please enter a number!"
 
@@ -7,6 +6,7 @@ def num_check(question, num_type, low=None, exit_code=None):
     if low is not None:
         error = f"Please enter an integer more than {low}"
 
+    # Input the question, allow lowercase and uppercase
     while True:
         response = input(question).lower()
 
@@ -27,6 +27,7 @@ def num_check(question, num_type, low=None, exit_code=None):
             else:
                 return response
 
+        # If user enters an incorrect value, print the error message
         except ValueError:
             print(error)
 

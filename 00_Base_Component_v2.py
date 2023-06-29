@@ -44,7 +44,6 @@ def formulas(formula_type):
             print("    ---------------")
             print("           L")
             print()
-            print("-" * 70)
             break
 
         # Print triangle formulas and shape when called
@@ -64,7 +63,6 @@ def formulas(formula_type):
             print("        /__________\      v")
             print("              b ")
             print()
-            print("-" * 70)
             break
 
         # Print circle formulas and shape when called
@@ -89,14 +87,12 @@ def formulas(formula_type):
             print("                __            __")
             print("                  __ ______ __")
             print()
-            print("-" * 70)
             break
 
 
 # Question generator function...
 def question_gen(question_type):
-
-    # Make sure the answers are accessable and changable outside the function aswell
+    # Make sure the answers are accessible and changeable outside the function as well
     global AREA_ANSWER
     global PERIMETER_ANSWER
 
@@ -293,6 +289,7 @@ def question_gen(question_type):
                 print()
                 break
 
+
 # Number checker function...
 def num_check(num_question, num_type, low=None, exit_code=None):
     error = "Please enter a number!"
@@ -340,37 +337,54 @@ start_part_two = ""
 area_question = "The area is ___ metres squared"
 perimeter_question = "The perimeter is ___ metres"
 
-# Start question loop
+# Set question looping variables
+rounds_played = 0
+rounds = num_check("How many questions?: ", int, 0, exit_code="")
+rounds_mode = None
+
+# If user enters <enter> start infinite mode
+if rounds == "":
+    rounds_mode = "infinite"
+    rounds = 5
+
+# Ask user what shape they would like to solve areas and perimeters for
+print("What shape?")
+quiz_mode = string_checker("Rectangle // Triangle // Circle? ",
+                           rtc_list, "Please enter r / t / c")
+
+# If user chooses rectangles, call formulas function to print rectangle formulas
+if quiz_mode == "rectangle":
+    formulas("rectangle")
+
+# If user chooses triangles, call formulas function to print triangle formulas
+elif quiz_mode == "triangle":
+    formulas("triangle")
+
+# If user chooses circles, call formulas function to print circle formulas
+elif quiz_mode == "circle":
+    formulas("circle")
+
+# Start question loop (rounds)
 end_quiz = "no"
 while end_quiz == "no":
 
-    rounds_played = 0
-    mode = None
+    # Calculate rounds played for infinite mode, customise question heading
+    if rounds_mode == "infinite":
+        heading = f"          QUESTION {rounds_played + 1} (Infinite mode)"
+        rounds += 1
 
-    # Ask user what shape they would like to solve areas and perimeters for
-    print("What shape?")
-    quiz_mode = string_checker("Rectangle // Triangle // Circle? ",
-                               rtc_list, "Please enter r / t / c")
+    # If mode is not infinite, show rounds played against total rounds, customise question heading
+    else:
+        heading = f"          QUESTION {rounds_played + 1} OF {rounds}"
 
     # If user wants to quit, end question loop
     if quiz_mode == "xxx":
         print("You have ended the quiz")
         break
 
-    # If user chooses rectangles, call formulas function to print rectangle formulas
-    if quiz_mode == "rectangle":
-        formulas("rectangle")
-
-    # If user chooses triangles, call formulas function to print triangle formulas
-    elif quiz_mode == "triangle":
-        formulas("triangle")
-
-    # If user chooses circles, call formulas function to print circle formulas
-    elif quiz_mode == "circle":
-        formulas("circle")
-
     # Ask if they want part one (area), or to quit
-    question_part_one = string_checker("Press <enter> for Question _ (or xxx to quit): ",
+    print("-" * 70)
+    question_part_one = string_checker(f"Press <enter> for Question {rounds_played + 1} (or xxx to quit): ",
                                        question_start_list, "Please enter a valid response")
     print("-" * 70)
 
@@ -385,7 +399,7 @@ while end_quiz == "no":
         print("*" * 35)
         print("*" * 35)
         print()
-        print("          QUESTION _ OF _")
+        print(heading)
         print()
         print("*" * 35)
         print("*" * 35)
@@ -394,15 +408,15 @@ while end_quiz == "no":
 
         # If they chose rectangles, generate and print a rectangle question 
         if quiz_mode == "rectangle":
-            question = question_gen("rectangle")
+            question_gen("rectangle")
 
         # If they chose triangles, generate and print a triangles question
         elif quiz_mode == "triangle":
-            question = question_gen("triangle")
+            question_gen("triangle")
 
         # If they chose circles, generate and print a circles question
         elif quiz_mode == "circle":
-            question = question_gen("circle")
+            question_gen("circle")
 
         # Print Part A heading
         print()
@@ -424,10 +438,10 @@ while end_quiz == "no":
         # If quiz mode is circle, compare answers as rounded strings (2dp)
         if quiz_mode == "circle":
 
-            # Set guess answer to a rounded string value so it can be compared against the circles string ANSWER
+            # Set guess answer to a rounded string value, so it can be compared against the circles string ANSWER
             user_string_area_answer = f"{guess_answer:.2f}"
-            
-            # If users answer is corect, let them see the correct answer message
+
+            # If users answer is correct, let them see the correct answer message
             if user_string_area_answer == AREA_ANSWER:
                 message = "correct"
 
@@ -437,8 +451,8 @@ while end_quiz == "no":
 
         # If quiz mode is 'r' or 't', compare answers as floats 
         else:
-            
-            # If users answer is corect, let them see the correct answer message
+
+            # If users answer is correct, let them see the correct answer message
             if guess_answer == AREA_ANSWER:
                 message = "correct"
 
@@ -459,8 +473,7 @@ while end_quiz == "no":
             print("The area was", AREA_ANSWER)
             print()
             print("-" * 70)
-            
-                
+
     # Ask if they want part 2 (perimeter), or to quit
     question_part_two = string_checker("Press <enter> for Part Two (or xxx to quit): ",
                                        question_start_list, "Please enter a valid response")
@@ -479,6 +492,7 @@ while end_quiz == "no":
         print()
         print("Using the same shape from above...")
         print()
+        print()
 
         # Print the perimeter question
         print(perimeter_question)
@@ -492,10 +506,10 @@ while end_quiz == "no":
         # If quiz mode is circle, compare answers as rounded strings (2dp)
         if quiz_mode == "circle":
 
-            # Set guess answer to a rounded string value so it can be compared against the circles string ANSWER
+            # Set guess answer to a rounded string value, so it can be compared against the circles string ANSWER
             user_string_perimeter_answer = f"{guess_answer:.2f}"
-            
-            # If users answer is corect, let them see the correct answer message
+
+            # If users answer is correct, let them see the correct answer message
             if user_string_perimeter_answer == PERIMETER_ANSWER:
                 message = "correct"
 
@@ -505,8 +519,8 @@ while end_quiz == "no":
 
         # If quiz mode is 'r' or 't', compare answers as floats 
         else:
-            
-            # If users answer is corect, let them see the correct answer message
+
+            # If users answer is correct, let them see the correct answer message
             if guess_answer == PERIMETER_ANSWER:
                 message = "correct"
 
@@ -524,10 +538,17 @@ while end_quiz == "no":
         elif message == "incorrect":
             print("XXXX Incorrect XXXX")
             print("The perimeter was", PERIMETER_ANSWER)
+            print()
 
-    break
+    # End of one question, so add 1 to rounds played
+    rounds_played += 1
 
-print()
+    # Check if we are out of rounds
+    # If out of rounds, end questions loop
+    if rounds_played >= rounds:
+        print("-" * 70)
+        print("All Questions Done!")
+        print("-" * 70)
+        break
+
 print("END OF CODE")
-
-        

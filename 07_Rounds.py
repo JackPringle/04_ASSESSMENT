@@ -28,6 +28,7 @@ def num_check(question, num_type, low=None, exit_code=None):
             else:
                 return response
 
+        # If user eneters an incorrect value, print the error message
         except ValueError:
             print(error)
 

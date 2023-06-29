@@ -1,14 +1,15 @@
+import math
 import random
 
 
 # Functions...
 
 # String checker function...
-def string_checker(question, valid_list, error):
+def string_checker(string_question, valid_list, error):
     while True:
 
         # Ask user for string (and put string in lowercase)
-        response = input(question).lower()
+        response = input(string_question).lower()
 
         # Check the string is in the valid list
         for item in valid_list:
@@ -91,8 +92,14 @@ def formulas(formula_type):
             print("-" * 70)
             break
 
+
 # Question generator function...
 def question_gen(question_type):
+
+    # Make sure the answers are accessable and changable outside the function aswell
+    global AREA_ANSWER
+    global PERIMETER_ANSWER
+
     while True:
 
         # Chose random orientations for rectangles and isosceles
@@ -112,10 +119,6 @@ def question_gen(question_type):
             # Calculate answers
             AREA_ANSWER = L_value * W_value
             PERIMETER_ANSWER = 2 * L_value + 2 * W_value
-
-            # Update values in the dictionary
-            values_dict["L_value"] = L_value
-            values_dict["W_value"] = W_value
 
             # if L is greater than W, generate from two different orientations of rectangles
             if L_value > W_value:
@@ -169,12 +172,6 @@ def question_gen(question_type):
             # Calculate answers
             AREA_ANSWER = 0.5 * b_value * h_value
             PERIMETER_ANSWER = a_value + b_value + c_value
-
-            # Update values in the dictionary
-            values_dict["a_value"] = a_value
-            values_dict["b_value"] = b_value
-            values_dict["c_value"] = c_value
-            values_dict["h_value"] = h_value
 
             # print narrow isosceles triangle
             if a_value == c_value and a_value > b_value:
@@ -264,17 +261,10 @@ def question_gen(question_type):
             r_value = random.randint(1, 150)
 
             # Calculate answers
-            AREA_ANSWER = 3.14159265358979323846264338327950 * (r_value ** 2)
-            PERIMETER_ANSWER = 2 * 3.14159265358979323846264338327950 * r_value
-
-            # Format the answers to two decimal places
-            formatted_area = "{:.2f}".format(AREA_ANSWER)
-            formatted_perimeter = "{:.2f}".format(PERIMETER_ANSWER)
-            AREA_ANSWER = formatted_area
-            PERIMETER_ANSWER = formatted_perimeter
-
-            # Update values in the dictionary
-            values_dict["r_value"] = r_value
+            unrounded_area = math.pi * (r_value ** 2)
+            unrounded_perimeter = 2 * math.pi * r_value
+            AREA_ANSWER = f"{unrounded_area:.2f}"
+            PERIMETER_ANSWER = f"{unrounded_perimeter:.2f}"
 
             # Unique diameter question
             if r_value >= 75:
@@ -306,22 +296,17 @@ def question_gen(question_type):
                 print()
                 break
 
-    # Set area and perimeter answers to value dictionary, then return the values dictionary
-    values_dict["AREA_ANSWER"] = AREA_ANSWER
-    values_dict["PERIMETER_ANSWER"] = PERIMETER_ANSWER
-    return values_dict
-
-
 # Number checker function...
-def num_check(question, num_type, low=None, exit_code=None):
+def num_check(num_question, num_type, low=None, exit_code=None):
     error = "Please enter a number!"
 
     # Error message when user enters a number less than low
     if low is not None:
         error = f"Please enter an integer more than {low}"
 
+    # Input the question, allow lowercase and uppercase
     while True:
-        response = input(question).lower()
+        response = input(num_question).lower()
 
         try:
             # If user enters exit code, return response
@@ -340,6 +325,7 @@ def num_check(question, num_type, low=None, exit_code=None):
             else:
                 return response
 
+        # If user enters an incorrect value, print the error message
         except ValueError:
             print(error)
 
@@ -356,6 +342,7 @@ question_part_one = ""
 start_part_two = ""
 area_question = "The area is ___ metres squared"
 perimeter_question = "The perimeter is ___ metres"
+question = {}
 
 # Start one question loop
 while True:
@@ -384,7 +371,7 @@ while True:
 
     # Ask if they want part one (area), or to quit
     question_part_one = string_checker("Press <enter> for Question _ (or xxx to quit): ",
-                                    question_start_list, "Please enter a valid response")
+                                       question_start_list, "Please enter a valid response")
     print("-" * 70)
 
     # If user wants to quit, end question loop
@@ -427,32 +414,56 @@ while True:
 
         # Print the area question
         print(area_question)
-        
+
         # Get user to enter their answer, check answer is valid
         guess_answer = num_check("Area: ", float, 0, "xxx")
         print()
 
-        # If the user wants to quit, end question loop
-        if guess_answer == "xxx":
-            print("You have ended the quiz")
-            break
+        # Check users area answers...
 
-        # If the users answer is correct, tell them, then print the answer
-        elif guess_answer == question["AREA_ANSWER"]:
+        # If quiz mode is circle, compare answers as rounded strings (2dp)
+        if quiz_mode == "circle":
+
+            # Set guess answer to a rounded string value so it can be compared against the circles string ANSWER
+            user_string_area_answer = f"{guess_answer:.2f}"
+            
+            # If users answer is corect, let them see the correct answer message
+            if user_string_area_answer == AREA_ANSWER:
+                message = "correct"
+
+            # If users answer is incorrect, let them see the incorrect answer message
+            elif user_string_area_answer != AREA_ANSWER:
+                message = "incorrect"
+
+        # If quiz mode is 'r' or 't', compare answers as floats 
+        else:
+            
+            # If users answer is corect, let them see the correct answer message
+            if guess_answer == AREA_ANSWER:
+                message = "correct"
+
+            # If users answer is incorrect, let them see the incorrect answer message
+            elif guess_answer != AREA_ANSWER:
+                message = "incorrect"
+
+        # Correct answer message
+        if message == "correct":
             print("^^^^ Correct ^^^^")
-            print("The area was", question["AREA_ANSWER"])
+            print("The area was", AREA_ANSWER)
             print()
+            print("-" * 70)
 
-        # If the users answer is incorrect, tell them, then print the answer
-        elif guess_answer != question["AREA_ANSWER"]:
-            print("XXXXX Incorrect XXXX")
-            print(f"The area was", question["AREA_ANSWER"])
+        # Incorrect answer message
+        elif message == "incorrect":
+            print("XXXX Incorrect XXXX")
+            print("The area was", AREA_ANSWER)
             print()
             print("-" * 70)
             
+                
     # Ask if they want part 2 (perimeter), or to quit
     question_part_two = string_checker("Press <enter> for Part Two (or xxx to quit): ",
-                                        question_start_list, None)
+                                       question_start_list, "Please enter a valid response")
 
     # If the user wants to quit, end question loop
     if question_part_two == "xxx":
@@ -461,7 +472,6 @@ while True:
 
     # If they want part 2, format part 2 heading
     elif question_part_two == "":
-        print()
         print("-" * 70)
         print()
         print(" ---PART B---")
@@ -473,27 +483,51 @@ while True:
         # Print the perimeter question
         print(perimeter_question)
 
-        # Get the user to enter their answer, check answer is valid
+        # Get user to enter their answer, check answer is valid
         guess_answer = num_check("Perimeter: ", float, 0, "xxx")
         print()
 
-        # If the user wants to quit, end question loop
-        if guess_answer == "xxx":
-            print("you have ended the quiz")
-            break
-        # If the answer is correct, tell them, then print the answer
-        elif guess_answer == question["PERIMETER_ANSWER"]:
+        # Check users perimeter answers...
+
+        # If quiz mode is circle, compare answers as rounded strings (2dp)
+        if quiz_mode == "circle":
+
+            # Set guess answer to a rounded string value so it can be compared against the circles string ANSWER
+            user_string_perimeter_answer = f"{guess_answer:.2f}"
+            
+            # If users answer is corect, let them see the correct answer message
+            if user_string_perimeter_answer == PERIMETER_ANSWER:
+                message = "correct"
+
+            # If users answer is incorrect, let them see the incorrect answer message
+            elif user_string_perimeter_answer != PERIMETER_ANSWER:
+                message = "incorrect"
+
+        # If quiz mode is 'r' or 't', compare answers as floats 
+        else:
+            
+            # If users answer is corect, let them see the correct answer message
+            if guess_answer == PERIMETER_ANSWER:
+                message = "correct"
+
+            # If users answer is incorrect, let them see the incorrect answer message
+            elif guess_answer != PERIMETER_ANSWER:
+                message = "incorrect"
+
+        # Correct answer message
+        if message == "correct":
             print("^^^^ Correct ^^^^")
-            print("The perimeter was", question["PERIMETER_ANSWER"])
+            print("The perimeter was", PERIMETER_ANSWER)
             print()
 
-        # If the answer is incorrect, tell them, then print the answer
-        elif guess_answer != question["PERIMETER_ANSWER"]:
-            print("XXXXX Incorrect XXXX")
-            print(f"The perimeter was", question["PERIMETER_ANSWER"])
-            print()
-            print("-" * 70)
+        # Incorrect answer message
+        elif message == "incorrect":
+            print("XXXX Incorrect XXXX")
+            print("The perimeter was", PERIMETER_ANSWER)
 
-            print("END OF CODE")
+    break
 
-        break 
+print()
+print("END OF CODE")
+
+        

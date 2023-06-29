@@ -106,9 +106,6 @@ def question_gen(question_type):
         rec_orientation = random.choice(["vertical", "horizontal"])
         isos_orientation = random.choice(["vertical", "horizontal"])
 
-        # Create a dictionary of values
-        values_dict = {}
-
         # RECTANGLE QUESTIONS
         if question_type == "rectangle":
 
@@ -342,10 +339,13 @@ question_part_one = ""
 start_part_two = ""
 area_question = "The area is ___ metres squared"
 perimeter_question = "The perimeter is ___ metres"
-question = {}
 
-# Start one question loop
-while True:
+# Start question loop
+end_quiz = "no"
+while end_quiz == "no":
+
+    rounds_played = 0
+    mode = None
 
     # Ask user what shape they would like to solve areas and perimeters for
     print("What shape?")

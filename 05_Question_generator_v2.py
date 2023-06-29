@@ -15,9 +15,6 @@ def question_gen(question_type):
         rec_orientation = random.choice(["vertical", "horizontal"])
         isos_orientation = random.choice(["vertical", "horizontal"])
 
-        # Create a dictionary of values
-        values_dict = {}
-
         # RECTANGLE QUESTIONS
         if question_type == "rectangle":
 

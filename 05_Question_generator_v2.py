@@ -4,6 +4,11 @@ import math
 
 # Question generator function...
 def question_gen(question_type):
+
+    # Make sure the answers are accessable and changable outside the function aswell 
+    global AREA_ANSWER
+    global PERIMETER_ANSWER
+    
     while True:
 
         # Chose random orientations for rectangles and isosceles
@@ -23,10 +28,6 @@ def question_gen(question_type):
             # Calculate answers
             AREA_ANSWER = L_value * W_value
             PERIMETER_ANSWER = 2 * L_value + 2 * W_value
-
-            # Update values in the dictionary
-            values_dict["L_value"] = L_value
-            values_dict["W_value"] = W_value
 
             # if L is greater than W, generate from two different orientations of rectangles
             if L_value > W_value:
@@ -81,13 +82,7 @@ def question_gen(question_type):
             AREA_ANSWER = 0.5 * b_value * h_value
             PERIMETER_ANSWER = a_value + b_value + c_value
 
-            # Update values in the dictionary
-            values_dict["a_value"] = a_value
-            values_dict["b_value"] = b_value
-            values_dict["c_value"] = c_value
-            values_dict["h_value"] = h_value
-
-            # print narrow isosceles triangle    
+            # print narrow isosceles triangle
             if a_value == c_value and a_value > b_value:
                 print()
                 print("              /\               ^")
@@ -175,17 +170,10 @@ def question_gen(question_type):
             r_value = random.randint(1, 150)
 
             # Calculate answers
-            AREA_ANSWER = math.pi * (r_value ** 2)
-            PERIMETER_ANSWER = 2 * math.pi * r_value
-
-            # Format the answers to two decimal places
-            formatted_area = "{:.2f}".format(AREA_ANSWER)
-            formatted_perimeter = "{:.2f}".format(PERIMETER_ANSWER)
-            AREA_ANSWER = formatted_area
-            PERIMETER_ANSWER = formatted_perimeter
-
-            # Update values in the dictionary
-            values_dict["r_value"] = r_value
+            unrounded_area = math.pi * (r_value ** 2)
+            unrounded_perimeter = 2 * math.pi * r_value
+            AREA_ANSWER = f"{unrounded_area:.2f}"
+            PERIMETER_ANSWER = f"{unrounded_perimeter:.2f}"
 
             # Unique diameter question
             if r_value >= 75:
@@ -217,12 +205,6 @@ def question_gen(question_type):
                 print()
                 break
 
-    # Set area and perimeter answers to value dictionary, then return the values dictionary
-    values_dict["AREA_ANSWER"] = AREA_ANSWER
-    values_dict["PERIMETER_ANSWER"] = PERIMETER_ANSWER
-    return values_dict
-
-
 # Main Routine...
 
 # Call questions function for testing purposes
@@ -230,18 +212,18 @@ def question_gen(question_type):
 while True:
     input("Enter for rectangle: ")
     question = question_gen("rectangle")
-    print("The area is", question["AREA_ANSWER"])
-    print("The perimeter is", question["PERIMETER_ANSWER"])
+    print("The area is", AREA_ANSWER)
+    print("The perimeter is", PERIMETER_ANSWER)
     print()
 
     input("Enter for triangle: ")
     question = question_gen("triangle")
-    print("The area is", question["AREA_ANSWER"])
-    print("The perimeter is", question["PERIMETER_ANSWER"])
+    print("The area is", AREA_ANSWER)
+    print("The perimeter is", PERIMETER_ANSWER)
     print()
 
     input("Enter for circle: ")
     question = question_gen("circle")
-    print("The area is", question["AREA_ANSWER"])
-    print("The perimeter is", question["PERIMETER_ANSWER"])
+    print("The area is (rounded)", AREA_ANSWER)
+    print("The perimeter is (rounded)", PERIMETER_ANSWER)
     print()

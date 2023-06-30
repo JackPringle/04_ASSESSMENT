@@ -4,6 +4,43 @@ import random
 
 # Functions...
 
+# Instructions function...
+def instructions():
+
+    # Instructions here
+    while True:
+        print("-" * 70)
+        print()
+        print()
+        print("          ---- How to play ----")
+        print()
+        print()
+        print("-" * 70)
+        print("First, enter the amount of questions you would like to attempt.")
+        print("During the quiz, for each question a random shape of your choice")
+        print("choice will be genarated.")
+        print("Each question / shape has two parts, Part A (find Area), then")
+        print("Part B (find Perimeter)")
+        print()
+        print("Next, enter what shape type you would like to solve for...")
+        print("You can choose from Rectnagles // Triangles // circles.")
+        print("Formulas for your choosen shape will be provided.")
+        print()
+        print("Read the question generated, and answer Part A (Area).")
+        print("Using the same shape and values, answeer Part B (Perimeter).")
+        print()
+        print("If you want to quit the quiz, you can do this when its says")
+        print("'or press xxx to quit'")
+        print()
+        print("Once you have quit, or have answer all of your question parts,")
+        print("you can see your Quiz Summary.")
+        print()
+        print("Thats the gist of it!")
+        print("GOOD LUCK, AND ENJOY :)")
+        print("-" * 70)
+        return ""
+
+
 # String checker function...
 def string_checker(string_question, valid_list, error):
     while True:
@@ -353,8 +390,16 @@ print("*" * 70)
 print()
 print()
 
+# Ask if they want to see instructions
+show_instructions = input("Press <enter> for instructions or <any other key> to skip: ")
+
+# If they want instructions, show them, otherwise don't
+if show_instructions == "":
+    instructions()
 
 # Ask how many questions they want
+print()
+print()
 rounds = num_check("How many questions? (or <enter> for infinite mode): ", int, 0, exit_code="")
 print()
 if rounds == "":
@@ -515,6 +560,7 @@ while True:
     # Ask if they want part 2 (perimeter), or to quit
     question_part_two = string_checker("Press <enter> for Part Two (or xxx to quit): ",
                                        question_start_list, "Please enter a valid response")
+    print("-" * 70)
 
     # If the user wants to quit, end question loop
     if question_part_two == "xxx":
@@ -598,7 +644,7 @@ while True:
 
 # GAME SUMMARY...
 
-if show_summary == "yes":
+if show_summary == "yes" and rounds_mode != "infinite":
 
     # Work out the percentage of questions won
     percentage = (correct_answers / (rounds * 2)) * 100
@@ -613,7 +659,7 @@ if show_summary == "yes":
     print()
     print("*" * 35)
     print()
-    print("      ---- GAME SUMMARY ----")
+    print("      ---- QUIZ SUMMARY ----")
     print()
     print("*" * 35)
     print()

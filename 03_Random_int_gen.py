@@ -1,5 +1,7 @@
 import random
 
+# NOTE: THIS FUNCTION WILL BE COMBINED INTO 05_Question_generator
+
 
 # Random integer generator function...
 def int_generator():

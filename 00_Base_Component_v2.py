@@ -330,7 +330,7 @@ def num_check(num_question, num_type, low=None, exit_code=None):
 rtc_list = ["rectangle", "triangle", "circle", "xxx"]
 question_start_list = ["", "xxx"]
 
-# Define variables
+# Define the question variables
 quiz_mode = ""
 question_part_one = ""
 start_part_two = ""
@@ -339,8 +339,32 @@ perimeter_question = "The perimeter is ___ metres"
 
 # Set question looping variables
 rounds_played = 0
-rounds = num_check("How many questions?: ", int, 0, exit_code="")
 rounds_mode = None
+
+# Show quiz heading
+print()
+print("*" * 70)
+print("*" * 70)
+print()
+print("           ---- WELCOME TO AREA / PERIMETER QUIZ ----")
+print()
+print("*******************  -- By Jack Pringle --  **************************")
+print("*" * 70)
+print()
+print()
+
+
+# Ask how many questions they want
+rounds = num_check("How many questions? (or <enter> for infinite mode): ", int, 0, exit_code="")
+print()
+if rounds == "":
+    print("You chose infinite mode!")
+    print()
+
+# Set Quiz Summary variables
+correct_answers = 0
+incorrect_answers = 0
+show_summary = ""
 
 # If user enters <enter> start infinite mode
 if rounds == "":
@@ -355,18 +379,24 @@ quiz_mode = string_checker("Rectangle // Triangle // Circle? ",
 # If user chooses rectangles, call formulas function to print rectangle formulas
 if quiz_mode == "rectangle":
     formulas("rectangle")
+    show_summary = "yes"
 
 # If user chooses triangles, call formulas function to print triangle formulas
 elif quiz_mode == "triangle":
     formulas("triangle")
+    show_summary = "yes"
 
 # If user chooses circles, call formulas function to print circle formulas
 elif quiz_mode == "circle":
     formulas("circle")
+    show_summary = "yes"
 
-# Start question loop (rounds)
-end_quiz = "no"
-while end_quiz == "no":
+# If they haven't chosen a shape, dont show them a quiz summary when they quit
+elif quiz_mode == "xxx":
+    show_summary = "no"
+
+# START QUESTIONS LOOP (rounds)
+while True:
 
     # Calculate rounds played for infinite mode, customise question heading
     if rounds_mode == "infinite":
@@ -380,6 +410,8 @@ while end_quiz == "no":
     # If user wants to quit, end question loop
     if quiz_mode == "xxx":
         print("You have ended the quiz")
+        print("-" * 70)
+        print()
         break
 
     # Ask if they want part one (area), or to quit
@@ -391,6 +423,8 @@ while end_quiz == "no":
     # If user wants to quit, end question loop
     if question_part_one == "xxx":
         print("You have ended the quiz")
+        print("-" * 70)
+        print()
         break
 
     # If they want the first question, format question heading
@@ -460,19 +494,23 @@ while end_quiz == "no":
             elif guess_answer != AREA_ANSWER:
                 message = "incorrect"
 
-        # Correct answer message
+        # Correct answer message, add one to users correct answers tally
         if message == "correct":
             print("^^^^ Correct ^^^^")
             print("The area was", AREA_ANSWER)
             print()
             print("-" * 70)
 
-        # Incorrect answer message
+            correct_answers += 1
+
+        # Incorrect answer message, add one to users incorrect answers tally
         elif message == "incorrect":
             print("XXXX Incorrect XXXX")
             print("The area was", AREA_ANSWER)
             print()
             print("-" * 70)
+
+            incorrect_answers += 1
 
     # Ask if they want part 2 (perimeter), or to quit
     question_part_two = string_checker("Press <enter> for Part Two (or xxx to quit): ",
@@ -481,6 +519,8 @@ while end_quiz == "no":
     # If the user wants to quit, end question loop
     if question_part_two == "xxx":
         print("You have ended the quiz")
+        print("-" * 70)
+        print()
         break
 
     # If they want part 2, format part 2 heading
@@ -528,17 +568,21 @@ while end_quiz == "no":
             elif guess_answer != PERIMETER_ANSWER:
                 message = "incorrect"
 
-        # Correct answer message
+        # Correct answer message, add one to users correct answers tally
         if message == "correct":
             print("^^^^ Correct ^^^^")
             print("The perimeter was", PERIMETER_ANSWER)
             print()
+            
+            correct_answers += 1
 
-        # Incorrect answer message
+        # Incorrect answer message, add one to users incorrect answers tally
         elif message == "incorrect":
             print("XXXX Incorrect XXXX")
             print("The perimeter was", PERIMETER_ANSWER)
             print()
+
+            incorrect_answers += 1
 
     # End of one question, so add 1 to rounds played
     rounds_played += 1
@@ -551,4 +595,60 @@ while end_quiz == "no":
         print("-" * 70)
         break
 
-print("END OF CODE")
+
+# GAME SUMMARY...
+
+if show_summary == "yes":
+
+    # Work out the percentage of questions won
+    percentage = (correct_answers / (rounds * 2)) * 100
+
+    # Convert it into a float so that it can be checked whether it is >= or < 50
+    success_rate = float(f"{percentage:.2f}")
+
+    # Ask user to continue (breaks up the quiz for clarity)
+    game_summary = input("Enter <any key> to see your Quiz Summary: ")
+
+    # When they enter a key, print Quiz Summary statements and stats  
+    print()
+    print("*" * 35)
+    print()
+    print("      ---- GAME SUMMARY ----")
+    print()
+    print("*" * 35)
+    print()
+    print(f"You wanted {rounds} {quiz_mode} questions...")
+    print("-" * 35)
+    print()
+    print(f"Total questions completed: {rounds_played}")
+    print()
+    print("-" * 35)
+    print(f"Correct answers: {correct_answers}")
+    print(f"Incorrect answers: {incorrect_answers}")
+    print("-" * 35)
+    print()
+    print(f"Success Rate: {success_rate}%")
+
+    # If the success rate is greater than or equal to 50, congratulate them!
+    if success_rate >= 50:
+        print("Well done!")
+
+    # If it's less than 50%, but grater than 0, give them constructive criticism :)
+    elif 50 > success_rate > 0:
+        print("Theres room for improvement!")
+
+    # If its zero, yikes!
+    elif success_rate == 0:
+        print("Yikes!")
+
+# Thank user for playing when quiz ends
+print()
+print("*" * 70)
+print("*" * 70)
+print()
+print("          ---- ! THANKYOU FOR PLAYING ! ----")
+print()
+print("*" * 70)
+print("*" * 70)
+print()
+

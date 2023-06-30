@@ -204,7 +204,7 @@ def question_gen(question_type):
 
 # Main Routine...
 
-# Call questions function for testing purposes
+# Call questions function for testing purposes, all three types, and display answers
 
 while True:
     input("Enter for rectangle: ")
